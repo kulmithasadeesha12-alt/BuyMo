@@ -1,0 +1,2270 @@
+HTML
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuyMo - Buy & Sell Anything Worldwide</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌍</text></svg>">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans Sinhala", sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+        .top-bar {
+            background-color: #1a252f;
+            color: #cbd5e1;
+            font-size: 0.85rem;
+            padding: 0.55rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .top-bar-right { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+        .lang-select, .curr-select, .auth-btn {
+            background-color: #2c3e50;
+            color: #fff;
+            border: 1px solid #475569;
+            padding: 0.28rem 0.65rem;
+            border-radius: 5px;
+            font-size: 0.84rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .auth-btn:hover { background-color: #334155; }
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo { font-size: 2rem; font-weight: 800; cursor: pointer; letter-spacing: -1px; }
+        .logo span { color: #e67e22; }
+        .search-bar { display: flex; flex: 1; max-width: 600px; }
+        .search-bar select {
+            padding: 0.7rem 0.8rem;
+            border: none;
+            border-right: 1px solid #ddd;
+            border-radius: 6px 0 0 6px;
+            background: #f8f9fa;
+            color: #333;
+            font-size: 0.92rem;
+            cursor: pointer;
+        }
+        .search-bar input { width: 100%; padding: 0.7rem 1rem; border: none; font-size: 0.96rem; outline: none; }
+        .search-bar button {
+            background: #e67e22;
+            color: #fff;
+            border: none;
+            padding: 0 1.4rem;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .search-bar button:hover { background: #d35400; }
+        .nav-icons { display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap; }
+        .nav-icons button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .sell-btn {
+            background-color: #27ae60 !important;
+            padding: 0.6rem 1.1rem;
+            border-radius: 6px;
+        }
+        .sell-btn:hover { background-color: #219653 !important; }
+        .categories {
+            background: #fff;
+            padding: 0.8rem 2rem;
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .cat-tag {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.45rem 1.15rem;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .cat-tag.active, .cat-tag:hover { background: #e67e22; color: #fff; }
+        .hero-banner {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: #fff;
+            text-align: center;
+            padding: 2.2rem 1rem;
+            margin: 1.5rem 2rem;
+            border-radius: 12px;
+        }
+        .hero-banner h1 { font-size: 2rem; margin-bottom: 0.45rem; }
+        .hero-banner p { opacity: 0.92; font-size: 1rem; }
+        .container { max-width: 1200px; margin: 0 auto 2.5rem auto; padding: 0 2rem; }
+        .filter-bar {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.85rem 1.1rem;
+            margin-bottom: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .price-group { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .price-group input {
+            width: 118px;
+            padding: 0.45rem 0.6rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .clear-btn {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 0.45rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .section-actions { display: flex; gap: 0.65rem; align-items: center; flex-wrap: wrap; }
+        .sort-select {
+            padding: 0.48rem 0.72rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #fff;
+            color: #2c3e50;
+            font-size: 0.88rem;
+            cursor: pointer;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.4rem;
+        }
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1rem;
+        }
+        .recent-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .recent-card:hover { transform: translateY(-2px); border-color: #93c5fd; }
+        .product-card {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px rgba(0,0,0,0.09); }
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.92);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.05rem;
+            z-index: 2;
+        }
+        .photo-pill {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(26, 37, 47, 0.84);
+            color: #fff;
+            font-size: 0.74rem;
+            padding: 2px 7px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        .product-img {
+            background: #e2e8f0;
+            height: 175px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; }
+        .product-img span.emoji { font-size: 2.6rem; margin-bottom: 0.3rem; }
+        .product-details {
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex-grow: 1;
+        }
+        .badge-row { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; }
+        .badge { font-size: 0.72rem; padding: 2px 8px; border-radius: 4px; font-weight: 700; }
+        .badge-cat { background: #eef2f7; color: #475569; }
+        .badge-cond { background: #e0f2fe; color: #0369a1; }
+        .badge-ver { background: #dcfce7; color: #15803d; }
+        .badge-unver { background: #f1f5f9; color: #64748b; }
+        .badge-rep { background: #fef3c7; color: #b45309; }
+        .badge-sold { background: #fee2e2; color: #b91c1c; }
+        .badge-reserved { background: #ffedd5; color: #c2410c; }
+        .badge-avail { background: #ecfdf5; color: #047857; }
+        .seller-link {
+            font-size: 0.83rem;
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            width: fit-content;
+        }
+        .product-title { font-size: 1.04rem; font-weight: 700; color: #1e293b; }
+        .product-price { font-size: 1.2rem; font-weight: 800; color: #e67e22; }
+        .sub-price { font-size: 0.76rem; color: #64748b; }
+        .product-location { font-size: 0.84rem; color: #64748b; margin-bottom: 0.3rem; }
+        .card-actions { display: flex; gap: 0.35rem; margin-top: auto; flex-wrap: wrap; }
+        .btn-primary {
+            flex: 1;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.58rem;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            min-width: 80px;
+        }
+        .btn-primary:hover { background: #2980b9; }
+        .btn-sold-toggle {
+            background: #e2e8f0;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+            padding: 0.58rem 0.55rem;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.78rem;
+        }
+        .btn-buy-now {
+            width: 100%;
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            padding: 0.72rem;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.96rem;
+            cursor: pointer;
+            margin-top: 0.75rem;
+        }
+        .btn-buy-now:hover:not(:disabled) { background: #219653; }
+        .btn-buy-now:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-edit {
+            background: #fef9c3;
+            color: #a16207;
+            border: 1px solid #fde047;
+            padding: 0.58rem 0.6rem;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+            padding: 0.58rem 0.6rem;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        /* Gallery & Zoom */
+        .gallery-stage {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .gallery-main {
+            overflow: hidden;
+            border-radius: 6px;
+            max-height: 245px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-in;
+        }
+        .gallery-main.zoomed { cursor: zoom-out; }
+        .gallery-main img { width: 100%; max-height: 235px; object-fit: cover; transition: transform 0.25s ease; }
+        .gallery-main.zoomed img { transform: scale(1.8); }
+        .gallery-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.55rem;
+            gap: 0.5rem;
+        }
+        .gallery-btn {
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            padding: 0.28rem 0.65rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .thumb-row { display: flex; gap: 0.4rem; justify-content: center; overflow-x: auto; margin-top: 0.55rem; }
+        .thumb-img {
+            width: 46px;
+            height: 46px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .thumb-img.active { border-color: #e67e22; opacity: 1; }
+        .preview-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.55rem; }
+        .preview-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; }
+        /* Offer & In-App Chat */
+        .offer-box {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+        }
+        .offer-form { display: flex; gap: 0.45rem; margin-top: 0.4rem; }
+        .offer-form input {
+            flex: 1;
+            padding: 0.45rem 0.65rem;
+            border: 1px solid #fdba74;
+            border-radius: 6px;
+            font-size: 0.88rem;
+        }
+        .offer-form button {
+            background: #ea580c;
+            color: #fff;
+            border: none;
+            padding: 0.45rem 0.85rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .chat-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            padding: 0.8rem;
+            margin-top: 0.85rem;
+        }
+        .chat-list {
+            max-height: 145px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            margin-bottom: 0.55rem;
+        }
+        .chat-msg {
+            padding: 0.45rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            max-width: 85%;
+            word-break: break-word;
+        }
+        .chat-msg.buyer { background: #3498db; color: #fff; align-self: flex-end; }
+        .chat-msg.seller { background: #e2e8f0; color: #1e293b; align-self: flex-start; }
+        .chat-form { display: flex; gap: 0.4rem; }
+        .chat-form input {
+            flex: 1;
+            padding: 0.48rem 0.68rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.86rem;
+        }
+        .chat-form button {
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            padding: 0.48rem 0.85rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .modal-actions { display: flex; gap: 0.5rem; margin-top: 0.85rem; flex-wrap: wrap; }
+        .btn-share {
+            flex: 1;
+            background: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #7dd3fc;
+            padding: 0.52rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-report {
+            flex: 1;
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fcd34d;
+            padding: 0.52rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .payment-note {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            padding: 0.7rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            margin-bottom: 0.9rem;
+            line-height: 1.4;
+        }
+        .receipt-box, .order-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-size: 0.86rem;
+            line-height: 1.5;
+            margin-bottom: 0.65rem;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #fff;
+            border-radius: 10px;
+            max-width: 520px;
+            width: 100%;
+            padding: 1.7rem;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+        .form-group { margin-bottom: 0.9rem; }
+        .form-group label { display: block; font-size: 0.88rem; font-weight: 700; margin-bottom: 0.3rem; color: #2c3e50; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.94rem;
+        }
+        .submit-btn {
+            width: 100%;
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            padding: 0.78rem;
+            border-radius: 6px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .error-box {
+            display: none;
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fca5a5;
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+        .code-box {
+            display: inline-block;
+            background: #eff6ff;
+            border: 1px dashed #3b82f6;
+            color: #1d4ed8;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin: 0.5rem 0;
+        }
+        .review-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 0.65rem 0.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.86rem;
+        }
+        footer {
+            background: #1a252f;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .top-bar, header, .categories, .container { padding-left: 1rem; padding-right: 1rem; }
+            .hero-banner { margin: 1rem; padding: 1.8rem 1rem; }
+            .search-bar { order: 3; max-width: 100%; width: 100%; flex-direction: column; gap: 0.4rem; }
+            .search-bar select, .search-bar input, .search-bar button { border-radius: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span id="topBarText">🌍 BuyMo Prototype • Multi-Currency (Rs., $, £, €, ₹...), Status, Orders & Offers</span>
+        <div class="top-bar-right">
+            <select id="currencySelect" class="curr-select" onchange="changeDisplayCurrency(this.value)" title="Display Currency">
+                <option value="LKR">Rs. (LKR)</option>
+                <option value="USD">$ (USD)</option>
+                <option value="GBP">£ (GBP)</option>
+                <option value="EUR">€ (EUR)</option>
+                <option value="INR">₹ (INR)</option>
+                <option value="AUD">A$ (AUD)</option>
+                <option value="CAD">C$ (CAD)</option>
+                <option value="JPY">¥ (JPY)</option>
+                <option value="AED">AED</option>
+                <option value="SGD">S$ (SGD)</option>
+            </select>
+            <select id="langSelect" class="lang-select" onchange="changeLanguage(this.value)">
+                <option value="en">🌐 English</option>
+                <option value="si">🇱🇰 සිංහල</option>
+            </select>
+            <span id="userStatus">Guest</span>
+            <button type="button" class="auth-btn" id="authBtn" onclick="openAuthModal()">Login / Verify</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo" onclick="resetFilters()">Buy<span>Mo</span></div>
+        <div class="search-bar">
+            <select id="regionFilter" onchange="renderCurrentAds()">
+                <option value="All" data-i18n="allRegions">All Regions</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="India">India</option>
+            </select>
+            <input type="text" id="searchInput" oninput="renderCurrentAds()" placeholder="Search items, locations, or sellers...">
+            <button type="button" id="searchBtn" onclick="renderCurrentAds()">Search</button>
+        </div>
+        <div class="nav-icons">
+            <button type="button" onclick="toggleMyAds()">👤 <span data-i18n="myAds">My Ads</span> (<span id="myAdsCount">0</span>)</button>
+            <button type="button" onclick="openOrdersModal()">📦 <span data-i18n="myOrders">My Orders</span> (<span id="ordersCount">0</span>)</button>
+            <button type="button" onclick="toggleWishlist()">❤️ <span data-i18n="wishlist">Wishlist</span> (<span id="wishCount">0</span>)</button>
+            <button type="button" class="sell-btn" id="postAdNavBtn" onclick="openPostModal()">+ Post Ad</button>
+        </div>
+    </header>
+
+    <div class="categories">
+        <div class="cat-tag active" onclick="selectCategory('All', this)">🔥 <span data-cat="All">All</span></div>
+        <div class="cat-tag" onclick="selectCategory('Electronics', this)">📱 <span data-cat="Electronics">Electronics</span></div>
+        <div class="cat-tag" onclick="selectCategory('Vehicles', this)">🚗 <span data-cat="Vehicles">Vehicles</span></div>
+        <div class="cat-tag" onclick="selectCategory('Fashion', this)">👕 <span data-cat="Fashion">Fashion</span></div>
+        <div class="cat-tag" onclick="selectCategory('Property', this)">🏠 <span data-cat="Property">Property</span></div>
+        <div class="cat-tag" onclick="selectCategory('Home', this)">🛠️ <span data-cat="Home">Home & Appliances</span></div>
+        <div class="cat-tag" onclick="selectCategory('Sports', this)">⚽ <span data-cat="Sports">Sports & Books</span></div>
+    </div>
+
+    <div class="hero-banner">
+        <h1 id="heroTitle">Buy & Sell Safely on BuyMo</h1>
+        <p id="heroSub">View prices in Rs., $, £, €, ₹ and more, filter by price & condition, make offers, and track orders.</p>
+    </div>
+
+    <main class="container">
+        <div class="filter-bar">
+            <div class="price-group">
+                <strong id="priceFilterLabel" style="font-size:0.88rem; color:#2c3e50;">Price Range (<span id="filterCurrSymbol">Rs.</span>):</strong>
+                <input type="number" id="minPriceInput" min="0" step="any" oninput="renderCurrentAds()" placeholder="Min Price">
+                <span style="color:#64748b;">—</span>
+                <input type="number" id="maxPriceInput" min="0" step="any" oninput="renderCurrentAds()" placeholder="Max Price">
+                <select id="conditionFilter" class="sort-select" onchange="renderCurrentAds()">
+                    <option value="all" data-cond-opt="all">All Conditions</option>
+                    <option value="brand-new" data-cond-opt="brand-new">Brand New</option>
+                    <option value="like-new" data-cond-opt="like-new">Like New</option>
+                    <option value="used" data-cond-opt="used">Used</option>
+                </select>
+                <button type="button" class="clear-btn" id="clearPriceBtn" onclick="clearFiltersOnly()">Clear</button>
+            </div>
+            <div class="section-actions">
+                <select id="sortSelect" class="sort-select" onchange="renderCurrentAds()">
+                    <option value="default" data-sort="default">Sort: Featured</option>
+                    <option value="price-asc" data-sort="price-asc">Price: Low to High</option>
+                    <option value="price-desc" data-sort="price-desc">Price: High to Low</option>
+                </select>
+                <button type="button" class="auth-btn" id="resetDemoBtn" onclick="resetDemoData()">Reset Demo Data</button>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <h2 id="sectionTitle">Featured Ads</h2>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+
+        <div id="recentlyViewedSection" style="display:none; margin-top:2.5rem;">
+            <div class="section-title">
+                <h3 id="recentHeading" style="color:#2c3e50;">🕒 Recently Viewed</h3>
+            </div>
+            <div class="recent-grid" id="recentlyViewedGrid"></div>
+        </div>
+    </main>
+
+    <!-- Details Modal -->
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModal('detailsModal')">&times;</button>
+            <div id="detailsContent"></div>
+        </div>
+    </div>
+
+    <!-- Order / Payment (COD & Card Demo) Modal -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModal('paymentModal')">&times;</button>
+            <div id="paymentContent"></div>
+        </div>
+    </div>
+
+    <!-- My Orders History Modal -->
+    <div class="modal-overlay" id="ordersModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModal('ordersModal')">&times;</button>
+            <div id="ordersContent"></div>
+        </div>
+    </div>
+
+    <!-- Post / Edit Ad Modal -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModal('postModal')">&times;</button>
+            <h2 id="postModalTitle" style="margin-bottom:1rem; color:#2c3e50;">Post a New Ad</h2>
+            <div id="adErrorBox" class="error-box"></div>
+            <form onsubmit="submitAd(event)">
+                <div class="form-group">
+                    <label id="lblTitle">Title</label>
+                    <input type="text" id="adTitle" required placeholder="e.g. iPhone 15 Pro 256GB">
+                </div>
+                <div class="form-group">
+                    <label id="lblCategory">Category</label>
+                    <select id="adCategory">
+                        <option value="Electronics">Electronics</option>
+                        <option value="Vehicles">Vehicles</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Property">Property</option>
+                        <option value="Home">Home & Appliances</option>
+                        <option value="Sports">Sports & Books</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="lblCondition">Condition</label>
+                    <select id="adCondition">
+                        <option value="used">Used</option>
+                        <option value="like-new">Like New</option>
+                        <option value="brand-new">Brand New</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="lblStatus">Availability Status</label>
+                    <select id="adStatus">
+                        <option value="available">Available</option>
+                        <option value="reserved">Reserved</option>
+                        <option value="sold">Sold</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="lblPhotos">Photos (Up to 6, Auto-Compressed)</label>
+                    <input type="file" id="adPhotoInput" accept="image/*" multiple onchange="handlePhotoUpload(event)">
+                    <div id="photoPreviewGrid" class="preview-grid"></div>
+                </div>
+                <div class="form-group">
+                    <label id="lblCurrency">Currency</label>
+                    <select id="adCurrency">
+                        <option value="LKR">Rs. (LKR)</option>
+                        <option value="USD">$ (USD)</option>
+                        <option value="GBP">£ (GBP)</option>
+                        <option value="EUR">€ (EUR)</option>
+                        <option value="INR">₹ (INR)</option>
+                        <option value="AUD">A$ (AUD)</option>
+                        <option value="CAD">C$ (CAD)</option>
+                        <option value="JPY">¥ (JPY)</option>
+                        <option value="AED">AED</option>
+                        <option value="SGD">S$ (SGD)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="lblPrice">Price</label>
+                    <input type="number" id="adPrice" required min="1" step="any" placeholder="e.g. 850">
+                </div>
+                <div class="form-group">
+                    <label id="lblRegion">Region</label>
+                    <select id="adRegion">
+                        <option value="United States">United States</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="India">India</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label id="lblLocation">City / Location</label>
+                    <input type="text" id="adLocation" required placeholder="e.g. Colombo, Sri Lanka">
+                </div>
+                <div class="form-group">
+                    <label id="lblPhone">Contact (Phone / WhatsApp)</label>
+                    <input type="text" id="adPhone" required placeholder="e.g. +94 77 123 4567">
+                </div>
+                <div class="form-group">
+                    <label id="lblDesc">Description</label>
+                    <textarea id="adDesc" rows="3" required placeholder="Item condition and details..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitAdBtn">Publish Ad</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Demo Login & Verification Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModal('authModal')">&times;</button>
+            <div id="authContent"></div>
+        </div>
+    </div>
+
+    <!-- Seller Profile & Star Ratings Modal -->
+    <div class="modal-overlay" id="sellerModal">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModal('sellerModal')">&times;</button>
+            <div id="sellerContent"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p id="footerText">&copy; 2026 BuyMo Prototype. Demo exchange rates shown; connect a Live FX API & Payment Gateway for production.</p>
+    </footer>
+
+    <script>
+        const KEYS = {
+            ads: "buymo_proto_ads_v5",
+            wish: "buymo_proto_wish_v5",
+            user: "buymo_proto_user_v5",
+            reviews: "buymo_proto_reviews_v5",
+            orders: "buymo_proto_orders_v5",
+            recent: "buymo_proto_recent_v5",
+            lang: "buymo_proto_lang_v5",
+            curr: "buymo_proto_curr_v5"
+        };
+
+        // Prototype exchange rates relative to 1 USD (for instant display switching)
+        const CURRENCIES = {
+            LKR: { symbol: "Rs. ", rateFromUsd: 295, decimals: 0, label: "Rs. (LKR)" },
+            USD: { symbol: "$", rateFromUsd: 1, decimals: 2, label: "$ (USD)" },
+            GBP: { symbol: "£", rateFromUsd: 0.79, decimals: 2, label: "£ (GBP)" },
+            EUR: { symbol: "€", rateFromUsd: 0.92, decimals: 2, label: "€ (EUR)" },
+            INR: { symbol: "₹", rateFromUsd: 84, decimals: 0, label: "₹ (INR)" },
+            AUD: { symbol: "A$", rateFromUsd: 1.53, decimals: 2, label: "A$ (AUD)" },
+            CAD: { symbol: "C$", rateFromUsd: 1.39, decimals: 2, label: "C$ (CAD)" },
+            JPY: { symbol: "¥", rateFromUsd: 154, decimals: 0, label: "¥ (JPY)" },
+            AED: { symbol: "AED ", rateFromUsd: 3.67, decimals: 2, label: "AED" },
+            SGD: { symbol: "S$", rateFromUsd: 1.34, decimals: 2, label: "S$ (SGD)" }
+        };
+
+        const i18n = {
+            en: {
+                topBar: "🌍 BuyMo Prototype • Multi-Currency (Rs., $, £, €, ₹...), Status, Orders & Offers",
+                guest: "Guest",
+                loginVerify: "Login / Verify",
+                logout: "Logout",
+                allRegions: "All Regions",
+                searchPh: "Search items, locations, or sellers...",
+                searchBtn: "Search",
+                myAds: "My Ads",
+                myOrders: "My Orders",
+                wishlist: "Wishlist",
+                postAd: "+ Post Ad",
+                heroTitle: "Buy & Sell Safely on BuyMo",
+                heroSub: "Switch between Rs., $, £, €, ₹ and more, filter by price & condition, make offers, and track orders.",
+                priceRange: "Price Range",
+                minPh: "Min Price",
+                maxPh: "Max Price",
+                clearBtn: "Clear",
+                resetBtn: "Reset Demo Data",
+                featured: "Featured Ads",
+                recentHeading: "🕒 Recently Viewed",
+                verified: "✔ Verified Seller",
+                unverified: "Unverified",
+                reported: "⚠ Reported",
+                noResults: "No matching ads found.",
+                loginFirst: "Please login first to perform this action.",
+                ownerOnly: "Only the owner of this ad can edit or delete it.",
+                deleteConfirm: "Delete this ad permanently?",
+                detailsBtn: "Details",
+                buyNowBtn: "💳 Buy Now (COD / Card Demo)",
+                soldUnavailableBtn: "Sold / Unavailable",
+                editAdBtn: "✏️ Edit Ad",
+                deleteAdBtn: "🗑️ Delete Ad",
+                markSoldBtn: "Mark Sold",
+                markAvailBtn: "Mark Available",
+                postTitle: "Post a New Ad",
+                editTitle: "Edit Your Ad",
+                publishBtn: "Publish Ad",
+                saveChangesBtn: "Save Changes",
+                lblTitle: "Title",
+                lblCategory: "Category",
+                lblCondition: "Condition",
+                lblStatus: "Availability Status",
+                lblPhotos: "Photos (Up to 6, Auto-Compressed)",
+                lblCurrency: "Ad Currency",
+                lblPrice: "Price",
+                lblRegion: "Region",
+                lblLocation: "City / Location",
+                lblPhone: "Contact (Phone / WhatsApp)",
+                lblDesc: "Description",
+                offerTitle: "💡 Make an Offer",
+                offerPh: "Your offer amount...",
+                offerSendBtn: "Send Offer",
+                offerSentMsg: "Offer sent in chat:",
+                chatTitle: "In-App Chat with Seller",
+                chatPh: "Ask about price, condition, or delivery...",
+                sendBtn: "Send",
+                autoReply: "Thanks for reaching out! Ask any question about this item.",
+                shareBtn: "🔗 Share Link",
+                shareCopied: "Ad link copied:",
+                reportBtn: "🚩 Report Ad",
+                reportConfirm: "Report this ad as suspicious or fake?",
+                reportDone: "Ad reported for safety review.",
+                zoomIn: "Click photo to Zoom",
+                zoomOut: "Click to Reset Zoom",
+                prevPhoto: "← Prev",
+                nextPhoto: "Next →",
+                payTitle: "Order & Payment Options",
+                payDemoNote: "Prototype Note: Local demo simulation with approximate FX conversion. No real card is charged.",
+                payMethodLbl: "Payment Method",
+                methodCod: "💵 Cash on Delivery (COD)",
+                methodCard: "💳 Card Payment (Demo)",
+                buyerNameLbl: "Your Name",
+                buyerPhoneLbl: "Delivery Phone",
+                buyerAddrLbl: "Delivery Address",
+                cardNumLbl: "Card Number (12–19 digits)",
+                cardExpLbl: "Expiry (MM/YY)",
+                cardCvcLbl: "CVV / CVC (3–4 digits)",
+                confirmOrderBtn: "Place Demo Order",
+                orderSuccessTitle: "Demo Order Placed!",
+                ordersModalTitle: "My Demo Orders",
+                noOrdersYet: "No demo orders placed yet.",
+                markDeliveredBtn: "Mark Delivered",
+                origLabel: "Listed in",
+                footer: "© 2026 BuyMo Prototype. Demo exchange rates shown; connect a Live FX API & Payment Gateway for production.",
+                statuses: {
+                    available: "Available",
+                    reserved: "Reserved",
+                    sold: "Sold"
+                },
+                conditions: {
+                    all: "All Conditions",
+                    used: "Used",
+                    "like-new": "Like New",
+                    "brand-new": "Brand New"
+                },
+                sortOptions: {
+                    default: "Sort: Featured",
+                    "price-asc": "Price: Low to High",
+                    "price-desc": "Price: High to Low"
+                },
+                categories: {
+                    All: "All",
+                    Electronics: "Electronics",
+                    Vehicles: "Vehicles",
+                    Fashion: "Fashion",
+                    Property: "Property",
+                    Home: "Home & Appliances",
+                    Sports: "Sports & Books"
+                }
+            },
+            si: {
+                topBar: "🌍 BuyMo Prototype • Multi-Currency (Rs., $, £, €, ₹...), Status, Orders & Offers",
+                guest: "Guest",
+                loginVerify: "Login / Verify",
+                logout: "Logout",
+                allRegions: "සියලුම රටවල්",
+                searchPh: "භාණ්ඩ, ස්ථාන හෝ විකුණුම්කරුවන් සොයන්න...",
+                searchBtn: "සොයන්න",
+                myAds: "මගේ Ads",
+                myOrders: "මගේ Orders",
+                wishlist: "Wishlist",
+                postAd: "+ දැන්වීමක් පළ කරන්න",
+                heroTitle: "BuyMo හරහා ආරක්ෂිතව මිලදී ගන්න හා විකුණන්න",
+                heroSub: "Rs., $, £, €, ₹ ඇතුළු මුදල් වර්ග වලින් මිල බලන්න, Filter කරන්න, Offer දමන්න, Orders බලන්න.",
+                priceRange: "මිල පරාසය",
+                minPh: "අවම මිල",
+                maxPh: "උපරිම මිල",
+                clearBtn: "මකන්න",
+                resetBtn: "මුල් දත්ත යළි සකසන්න",
+                featured: "ප්‍රධාන දැන්වීම්",
+                recentHeading: "🕒 මෑතකදී බැලූ දැන්වීම්",
+                verified: "✔ සත්‍යාපිත විකුණුම්කරු",
+                unverified: "සත්‍යාපනය කර නැත",
+                reported: "⚠ වාර්තා කළා",
+                noResults: "ගැලපෙන දැන්වීම් හමු නොවීය.",
+                loginFirst: "මෙම ක්‍රියාව සඳහා මුලින්ම Login වන්න.",
+                ownerOnly: "මෙම දැන්වීම Edit හෝ Delete කළ හැක්කේ එහි අයිතිකරුට පමණි.",
+                deleteConfirm: "මෙම දැන්වීම ස්ථිරවම මකන්නද?",
+                detailsBtn: "විස්තර",
+                buyNowBtn: "💳 දැන් මිලදී ගන්න (COD / Card Demo)",
+                soldUnavailableBtn: "විකුණා ඇත / ලබා ගත නොහැක",
+                editAdBtn: "✏️ Edit කරන්න",
+                deleteAdBtn: "🗑️ මකන්න",
+                markSoldBtn: "Sold කරන්න",
+                markAvailBtn: "Available කරන්න",
+                postTitle: "නව දැන්වීමක් පළ කරන්න",
+                editTitle: "ඔබේ දැන්වීම Edit කරන්න",
+                publishBtn: "දැන්වීම පළ කරන්න",
+                saveChangesBtn: "වෙනස්කම් සුරකින්න",
+                lblTitle: "මාතෘකාව",
+                lblCategory: "කාණ්ඩය",
+                lblCondition: "භාණ්ඩයේ තත්ත්වය",
+                lblStatus: "දැන්වීමේ තත්ත්වය (Status)",
+                lblPhotos: "ඡායාරූප (උපරිම 6ක් • Auto Compress වේ)",
+                lblCurrency: "දැන්වීමේ මුදල් ඒකකය",
+                lblPrice: "මිල",
+                lblRegion: "රට / කලාපය",
+                lblLocation: "නගරය / ස්ථානය",
+                lblPhone: "දුරකථන / WhatsApp අංකය",
+                lblDesc: "විස්තරය",
+                offerTitle: "💡 Offer මිලක් යවන්න",
+                offerPh: "ඔබේ Offer මිල...",
+                offerSendBtn: "Offer යවන්න",
+                offerSentMsg: "Offer එක Chat එකට යවන ලදී:",
+                chatTitle: "විකුණුම්කරු සමඟ In-App Chat",
+                chatPh: "මිල, තත්ත්වය හෝ Delivery ගැන අසන්න...",
+                sendBtn: "යවන්න",
+                autoReply: "පණිවිඩයට ස්තූතියි! මෙම භාණ්ඩය ගැන ඕනෑම ප්‍රශ්නයක් අසන්න.",
+                shareBtn: "🔗 Link Share",
+                shareCopied: "දැන්වීමේ Link එක Copy විය:",
+                reportBtn: "🚩 Report කරන්න",
+                reportConfirm: "මෙම දැන්වීම සැක සහිත හෝ ව්‍යාජ එකක් ලෙස Report කරනවාද?",
+                reportDone: "ආරක්ෂක පරීක්ෂාව සඳහා දැන්වීම Report කරන ලදී.",
+                zoomIn: "Zoom කිරීමට ඡායාරූපය ක්ලික් කරන්න",
+                zoomOut: "සාමාන්‍ය තත්ත්වයට ගැනීමට ක්ලික් කරන්න",
+                prevPhoto: "← පෙර",
+                nextPhoto: "ඊළඟ →",
+                payTitle: "Order සහ Payment ක්‍රම",
+                payDemoNote: "Prototype සටහන: මෙය Demo Simulation එකක් පමණි (ආසන්න Demo Exchange Rates භාවිත වේ). සැබෑ Card ගෙවීම් සඳහා Backend + Gateway අවශ්‍යයි.",
+                payMethodLbl: "ගෙවීමේ ක්‍රමය (Payment Method)",
+                methodCod: "💵 Cash on Delivery (COD — භාණ්ඩය ලැබුණු පසු මුදල්)",
+                methodCard: "💳 Card Payment (Demo — කාඩ්පත් අත්හදා බැලීම)",
+                buyerNameLbl: "ඔබේ නම",
+                buyerPhoneLbl: "Delivery දුරකථන අංකය",
+                buyerAddrLbl: "Delivery ලිපිනය",
+                cardNumLbl: "Card අංකය (ඉලක්කම් 12–19)",
+                cardExpLbl: "කල් ඉකුත් වන දිනය (MM/YY)",
+                cardCvcLbl: "CVV / CVC (ඉලක්කම් 3–4)",
+                confirmOrderBtn: "Demo Order එක තහවුරු කරන්න",
+                orderSuccessTitle: "Demo Order එක සාර්ථකව සටහන් විය!",
+                ordersModalTitle: "මගේ Demo Orders",
+                noOrdersYet: "තවම Demo Orders කිසිවක් දමා නැහැ.",
+                markDeliveredBtn: "Delivered ලෙස සලකුණු කරන්න",
+                origLabel: "මුල් මිල",
+                footer: "© 2026 BuyMo Prototype. Demo exchange rates පෙන්වයි; Live FX API & Payment Gateway පසුව සම්බන්ධ කළ හැක.",
+                statuses: {
+                    available: "Available",
+                    reserved: "Reserved",
+                    sold: "Sold"
+                },
+                conditions: {
+                    all: "සියලුම තත්ත්වයන්",
+                    used: "පාවිච්චි කළ (Used)",
+                    "like-new": "අලුත් වගේ (Like New)",
+                    "brand-new": "සම්පූර්ණයෙන් අලුත් (Brand New)"
+                },
+                sortOptions: {
+                    default: "පෙළගැස්ම: ප්‍රධාන",
+                    "price-asc": "මිල: අඩු සිට වැඩි",
+                    "price-desc": "මිල: වැඩි සිට අඩු"
+                },
+                categories: {
+                    All: "සියලුම කාණ්ඩ",
+                    Electronics: "ඉලෙක්ට්‍රොනික",
+                    Vehicles: "වාහන",
+                    Fashion: "විලාසිතා",
+                    Property: "දේපළ",
+                    Home: "නිවාස උපකරණ",
+                    Sports: "ක්‍රීඩා සහ පොත්"
+                }
+            }
+        };
+
+        // XSS-safe output sanitizer
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        const initialAds = [
+            {
+                id: 101,
+                ownerId: "seller_nimal",
+                sellerName: "Nimal Perera",
+                title: "iPhone 15 Pro Max - 256GB",
+                category: "Electronics",
+                condition: "like-new",
+                status: "available",
+                currency: "USD",
+                price: 940,
+                region: "Sri Lanka",
+                location: "Colombo, Sri Lanka",
+                phone: "+94 77 555 1234",
+                emoji: "📱",
+                images: [],
+                verified: true,
+                reports: 0,
+                desc: "Clean condition, battery health 97%, includes original box and cable.",
+                messages: [{ sender: "seller", text: "Hi! Available for inspection or delivery." }]
+            },
+            {
+                id: 102,
+                ownerId: "seller_sarah",
+                sellerName: "Sarah Jenkins",
+                title: "Toyota Prius Hybrid 2018",
+                category: "Vehicles",
+                condition: "used",
+                status: "reserved",
+                currency: "GBP",
+                price: 12800,
+                region: "United Kingdom",
+                location: "London, UK",
+                phone: "+44 20 7946 0192",
+                emoji: "🚗",
+                images: [],
+                verified: true,
+                reports: 0,
+                desc: "Well maintained hybrid sedan, MOT valid, full service log.",
+                messages: []
+            },
+            {
+                id: 103,
+                ownerId: "seller_devon",
+                sellerName: "Devon Brooks",
+                title: "Classic Leather Jacket",
+                category: "Fashion",
+                condition: "brand-new",
+                status: "available",
+                currency: "USD",
+                price: 75,
+                region: "United States",
+                location: "Chicago, USA",
+                phone: "+1 312 555 0148",
+                emoji: "🧥",
+                images: [],
+                verified: false,
+                reports: 0,
+                desc: "Size L, genuine leather, brand new with tags.",
+                messages: []
+            }
+        ];
+
+        const initialReviews = {
+            "seller_nimal": [{ rating: 5, author: "Kasun D.", comment: "Honest seller and smooth deal." }],
+            "seller_sarah": [{ rating: 4, author: "Mark T.", comment: "Accurate vehicle details." }]
+        };
+
+        function normalizeCurrencyCode(rawCurr) {
+            if (!rawCurr) return "USD";
+            const upper = String(rawCurr).trim().toUpperCase();
+            if (CURRENCIES[upper]) return upper;
+            if (upper.includes("RS") || upper.includes("LKR")) return "LKR";
+            if (upper.includes("£") || upper.includes("GBP")) return "GBP";
+            if (upper.includes("€") || upper.includes("EUR")) return "EUR";
+            if (upper.includes("₹") || upper.includes("INR")) return "INR";
+            if (upper.includes("$") || upper.includes("USD")) return "USD";
+            return "USD";
+        }
+
+        function normalizeAd(ad) {
+            return {
+                ...ad,
+                condition: ad.condition || "used",
+                status: ["available", "reserved", "sold"].includes(ad.status) ? ad.status : "available",
+                currency: normalizeCurrencyCode(ad.currency),
+                images: Array.isArray(ad.images) ? ad.images : (ad.image ? [ad.image] : []),
+                verified: Boolean(ad.verified),
+                reports: Number(ad.reports || 0),
+                messages: Array.isArray(ad.messages) ? ad.messages : []
+            };
+        }
+
+        let currentLang = localStorage.getItem(KEYS.lang) === "si" ? "si" : "en";
+        let displayCurr = normalizeCurrencyCode(localStorage.getItem(KEYS.curr) || "LKR");
+        let currentUser = JSON.parse(localStorage.getItem(KEYS.user) || "null");
+        let ads = (JSON.parse(localStorage.getItem(KEYS.ads) || "null") || initialAds).map(normalizeAd);
+        let wishlist = JSON.parse(localStorage.getItem(KEYS.wish) || "null") || [];
+        let orders = JSON.parse(localStorage.getItem(KEYS.orders) || "null") || [];
+        let recentlyViewed = JSON.parse(localStorage.getItem(KEYS.recent) || "null") || [];
+        let sellerReviews = JSON.parse(localStorage.getItem(KEYS.reviews) || "null") || { ...initialReviews };
+
+        let selectedCategory = "All";
+        let viewMode = "all"; // all | myads | wishlist
+        let editingAdId = null;
+        let activeDetailsId = null;
+        let activePhotoIdx = 0;
+        let isZoomed = false;
+        let uploadedPhotos = [];
+        let pendingCode = "";
+        let authNotice = "";
+        let authIsErr = false;
+
+        function msg(key) {
+            return (i18n[currentLang] && i18n[currentLang][key]) || i18n.en[key];
+        }
+
+        function getCatLabel(catKey) {
+            return (i18n[currentLang].categories && i18n[currentLang].categories[catKey]) || catKey;
+        }
+
+        function getCondLabel(condKey) {
+            return (i18n[currentLang].conditions && i18n[currentLang].conditions[condKey]) || i18n[currentLang].conditions.used;
+        }
+
+        function getStatusLabel(statusKey) {
+            return (i18n[currentLang].statuses && i18n[currentLang].statuses[statusKey]) || statusKey;
+        }
+
+        function convertAmount(amount, fromCode, toCode) {
+            const fromMeta = CURRENCIES[normalizeCurrencyCode(fromCode)] || CURRENCIES.USD;
+            const toMeta = CURRENCIES[normalizeCurrencyCode(toCode)] || CURRENCIES.USD;
+            const usdVal = Number(amount) / fromMeta.rateFromUsd;
+            return usdVal * toMeta.rateFromUsd;
+        }
+
+        function formatMoney(amount, currCode) {
+            const code = normalizeCurrencyCode(currCode);
+            const meta = CURRENCIES[code] || CURRENCIES.USD;
+            const num = Number(amount);
+            const formatted = num.toLocaleString(undefined, {
+                minimumFractionDigits: meta.decimals,
+                maximumFractionDigits: meta.decimals
+            });
+            return `${meta.symbol}${formatted}`;
+        }
+
+        function formatAdDisplayPrice(ad) {
+            const converted = convertAmount(ad.price, ad.currency, displayCurr);
+            return formatMoney(converted, displayCurr);
+        }
+
+        function formatAdOriginalNote(ad) {
+            const adCurr = normalizeCurrencyCode(ad.currency);
+            if (adCurr === displayCurr) return "";
+            return `${msg("origLabel")}: ${formatMoney(ad.price, adCurr)}`;
+        }
+
+        function saveAll() {
+            try {
+                localStorage.setItem(KEYS.ads, JSON.stringify(ads));
+                localStorage.setItem(KEYS.wish, JSON.stringify(wishlist));
+                localStorage.setItem(KEYS.orders, JSON.stringify(orders));
+                localStorage.setItem(KEYS.recent, JSON.stringify(recentlyViewed));
+                localStorage.setItem(KEYS.reviews, JSON.stringify(sellerReviews));
+                localStorage.setItem(KEYS.curr, displayCurr);
+                if (currentUser) {
+                    localStorage.setItem(KEYS.user, JSON.stringify(currentUser));
+                } else {
+                    localStorage.removeItem(KEYS.user);
+                }
+            } catch (err) {
+                alert("Storage limit reached. Try uploading fewer or smaller photos.");
+            }
+        }
+
+        function changeDisplayCurrency(code) {
+            displayCurr = normalizeCurrencyCode(code);
+            saveAll();
+            applyStaticTranslations();
+            renderCurrentAds();
+            if (activeDetailsId) renderDetailsModal();
+        }
+
+        function applyStaticTranslations() {
+            const d = i18n[currentLang] || i18n.en;
+            const currMeta = CURRENCIES[displayCurr] || CURRENCIES.LKR;
+            document.documentElement.lang = currentLang;
+            document.getElementById("langSelect").value = currentLang;
+            document.getElementById("currencySelect").value = displayCurr;
+            document.getElementById("topBarText").innerText = d.topBar;
+            document.getElementById("searchInput").placeholder = d.searchPh;
+            document.getElementById("searchBtn").innerText = d.searchBtn;
+            document.getElementById("postAdNavBtn").innerText = d.postAd;
+            document.getElementById("heroTitle").innerText = d.heroTitle;
+            document.getElementById("heroSub").innerText = d.heroSub;
+            document.getElementById("priceFilterLabel").innerHTML = `${escapeHtml(d.priceRange)} (${escapeHtml(currMeta.symbol.trim())}):`;
+            document.getElementById("minPriceInput").placeholder = d.minPh;
+            document.getElementById("maxPriceInput").placeholder = d.maxPh;
+            document.getElementById("clearPriceBtn").innerText = d.clearBtn;
+            document.getElementById("resetDemoBtn").innerText = d.resetBtn;
+            document.getElementById("recentHeading").innerText = d.recentHeading;
+            document.getElementById("lblTitle").innerText = d.lblTitle;
+            document.getElementById("lblCategory").innerText = d.lblCategory;
+            document.getElementById("lblCondition").innerText = d.lblCondition;
+            document.getElementById("lblStatus").innerText = d.lblStatus;
+            document.getElementById("lblPhotos").innerText = d.lblPhotos;
+            document.getElementById("lblCurrency").innerText = d.lblCurrency;
+            document.getElementById("lblPrice").innerText = d.lblPrice;
+            document.getElementById("lblRegion").innerText = d.lblRegion;
+            document.getElementById("lblLocation").innerText = d.lblLocation;
+            document.getElementById("lblPhone").innerText = d.lblPhone;
+            document.getElementById("lblDesc").innerText = d.lblDesc;
+            document.getElementById("footerText").innerText = d.footer;
+
+            document.querySelectorAll("[data-i18n]").forEach(el => {
+                const k = el.getAttribute("data-i18n");
+                if (d[k]) el.innerText = d[k];
+            });
+
+            document.querySelectorAll("[data-cat]").forEach(el => {
+                el.innerText = getCatLabel(el.getAttribute("data-cat"));
+            });
+
+            Array.from(document.getElementById("adCategory").options).forEach(opt => {
+                opt.text = getCatLabel(opt.value);
+            });
+
+            Array.from(document.getElementById("adCondition").options).forEach(opt => {
+                if (d.conditions[opt.value]) opt.text = d.conditions[opt.value];
+            });
+
+            Array.from(document.getElementById("conditionFilter").options).forEach(opt => {
+                if (d.conditions[opt.value]) opt.text = d.conditions[opt.value];
+            });
+
+            Array.from(document.getElementById("adStatus").options).forEach(opt => {
+                if (d.statuses[opt.value]) opt.text = d.statuses[opt.value];
+            });
+
+            Array.from(document.getElementById("sortSelect").options).forEach(opt => {
+                if (d.sortOptions[opt.value]) opt.text = d.sortOptions[opt.value];
+            });
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang === "si" ? "si" : "en";
+            localStorage.setItem(KEYS.lang, currentLang);
+            applyStaticTranslations();
+            renderCurrentAds();
+        }
+
+        function syncHeader() {
+            const statusEl = document.getElementById("userStatus");
+            const authBtn = document.getElementById("authBtn");
+            if (currentUser) {
+                const vLabel = currentUser.verified ? msg("verified") : msg("unverified");
+                statusEl.innerText = `${currentUser.name} (${vLabel})`;
+                authBtn.innerText = msg("logout");
+            } else {
+                statusEl.innerText = msg("guest");
+                authBtn.innerText = msg("loginVerify");
+            }
+            const myCount = currentUser ? ads.filter(a => a.ownerId === currentUser.id).length : 0;
+            document.getElementById("myAdsCount").innerText = myCount;
+            document.getElementById("ordersCount").innerText = orders.length;
+            document.getElementById("wishCount").innerText = wishlist.length;
+        }
+
+        function isOwner(ad) {
+            return Boolean(currentUser && ad.ownerId === currentUser.id);
+        }
+
+        function selectCategory(cat, el) {
+            selectedCategory = cat;
+            viewMode = "all";
+            document.querySelectorAll(".cat-tag").forEach(t => t.classList.remove("active"));
+            el.classList.add("active");
+            renderCurrentAds();
+        }
+
+        function clearFiltersOnly() {
+            document.getElementById("minPriceInput").value = "";
+            document.getElementById("maxPriceInput").value = "";
+            document.getElementById("conditionFilter").value = "all";
+            renderCurrentAds();
+        }
+
+        function resetFilters() {
+            selectedCategory = "All";
+            viewMode = "all";
+            document.getElementById("searchInput").value = "";
+            document.getElementById("regionFilter").value = "All";
+            document.getElementById("minPriceInput").value = "";
+            document.getElementById("maxPriceInput").value = "";
+            document.getElementById("conditionFilter").value = "all";
+            document.getElementById("sortSelect").value = "default";
+            document.querySelectorAll(".cat-tag").forEach((t, i) => t.classList.toggle("active", i === 0));
+            renderCurrentAds();
+        }
+
+        function toggleMyAds() {
+            if (!currentUser) {
+                alert(msg("loginFirst"));
+                openAuthModal();
+                return;
+            }
+            viewMode = viewMode === "myads" ? "all" : "myads";
+            renderCurrentAds();
+        }
+
+        function toggleWishlist() {
+            viewMode = viewMode === "wishlist" ? "all" : "wishlist";
+            renderCurrentAds();
+        }
+
+        function toggleWishItem(id) {
+            wishlist = wishlist.includes(id) ? wishlist.filter(x => x !== id) : [...wishlist, id];
+            saveAll();
+            syncHeader();
+            renderCurrentAds();
+        }
+
+        function toggleSoldStatus(id) {
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+            if (!currentUser) {
+                alert(msg("loginFirst"));
+                openAuthModal();
+                return;
+            }
+            if (!isOwner(ad)) {
+                alert(msg("ownerOnly"));
+                return;
+            }
+            ad.status = ad.status === "sold" ? "available" : "sold";
+            saveAll();
+            renderCurrentAds();
+            if (activeDetailsId === id) renderDetailsModal();
+        }
+
+        function recordRecentlyViewed(id) {
+            recentlyViewed = [id, ...recentlyViewed.filter(x => x !== id)].slice(0, 6);
+            saveAll();
+            renderRecentlyViewed();
+        }
+
+        function renderRecentlyViewed() {
+            const section = document.getElementById("recentlyViewedSection");
+            const grid = document.getElementById("recentlyViewedGrid");
+            const items = recentlyViewed
+                .map(id => ads.find(a => a.id === id))
+                .filter(Boolean);
+
+            if (items.length === 0) {
+                section.style.display = "none";
+                return;
+            }
+            section.style.display = "block";
+            grid.innerHTML = items.map(ad => `
+                <div class="recent-card" onclick="openDetailsModal(${ad.id})">
+                    <div style="font-size:0.92rem; font-weight:700; color:#1e293b;">${escapeHtml(ad.emoji || "📦")} ${escapeHtml(ad.title)}</div>
+                    <div style="font-size:0.95rem; font-weight:800; color:#e67e22; margin-top:0.25rem;">${escapeHtml(formatAdDisplayPrice(ad))}</div>
+                    <div style="font-size:0.78rem; color:#64748b; margin-top:0.15rem;">📍 ${escapeHtml(ad.location)}</div>
+                </div>
+            `).join("");
+        }
+
+        function filterByPriceConditionAndSort(list) {
+            const minRaw = document.getElementById("minPriceInput").value;
+            const maxRaw = document.getElementById("maxPriceInput").value;
+            const condFilter = document.getElementById("conditionFilter").value;
+            const minVal = minRaw !== "" && Number.isFinite(Number(minRaw)) ? Number(minRaw) : -Infinity;
+            const maxVal = maxRaw !== "" && Number.isFinite(Number(maxRaw)) ? Number(maxRaw) : Infinity;
+
+            let filtered = list.filter(a => {
+                const pInDisplay = convertAmount(a.price, a.currency, displayCurr);
+                const priceOk = pInDisplay >= minVal && pInDisplay <= maxVal;
+                const condOk = condFilter === "all" || a.condition === condFilter;
+                return priceOk && condOk;
+            });
+
+            const sortMode = document.getElementById("sortSelect").value;
+            if (sortMode === "price-asc") {
+                filtered.sort((a, b) => convertAmount(a.price, a.currency, displayCurr) - convertAmount(b.price, b.currency, displayCurr));
+            }
+            if (sortMode === "price-desc") {
+                filtered.sort((a, b) => convertAmount(b.price, b.currency, displayCurr) - convertAmount(a.price, a.currency, displayCurr));
+            }
+            return filtered;
+        }
+
+        function renderCardMedia(ad) {
+            const pill = ad.images.length > 1 ? `<span class="photo-pill">📷 ${ad.images.length}</span>` : "";
+            if (ad.images.length > 0) {
+                return `<img src="${ad.images[0]}" alt="${escapeHtml(ad.title)}" loading="lazy">${pill}`;
+            }
+            return `<span class="emoji">${escapeHtml(ad.emoji || "📦")}</span><span>${escapeHtml(getCatLabel(ad.category))}</span>`;
+        }
+
+        function renderStatusBadge(status) {
+            const cls = status === "sold"
+                ? "badge-sold"
+                : (status === "reserved" ? "badge-reserved" : "badge-avail");
+            return `<span class="badge ${cls}">${escapeHtml(getStatusLabel(status))}</span>`;
+        }
+
+        function renderCurrentAds() {
+            syncHeader();
+            renderRecentlyViewed();
+            const heading = document.getElementById("sectionTitle");
+            const q = document.getElementById("searchInput").value.trim().toLowerCase();
+            const region = document.getElementById("regionFilter").value;
+
+            let list = [...ads];
+            if (viewMode === "myads") {
+                heading.innerText = msg("myAds");
+                list = currentUser ? list.filter(a => a.ownerId === currentUser.id) : [];
+            } else if (viewMode === "wishlist") {
+                heading.innerText = msg("wishlist");
+                list = list.filter(a => wishlist.includes(a.id));
+            } else {
+                heading.innerText = selectedCategory === "All" ? msg("featured") : getCatLabel(selectedCategory);
+                list = list.filter(a => {
+                    const catOk = selectedCategory === "All" || a.category === selectedCategory;
+                    const regOk = region === "All" || a.region === region;
+                    const qOk = !q ||
+                        a.title.toLowerCase().includes(q) ||
+                        a.location.toLowerCase().includes(q) ||
+                        a.sellerName.toLowerCase().includes(q) ||
+                        getCatLabel(a.category).toLowerCase().includes(q) ||
+                        getCondLabel(a.condition).toLowerCase().includes(q);
+                    return catOk && regOk && qOk;
+                });
+            }
+
+            list = filterByPriceConditionAndSort(list);
+
+            const grid = document.getElementById("productGrid");
+            if (list.length === 0) {
+                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:2.5rem; color:#64748b;">${escapeHtml(msg("noResults"))}</p>`;
+                return;
+            }
+
+            grid.innerHTML = list.map(ad => {
+                const wished = wishlist.includes(ad.id);
+                const owner = isOwner(ad);
+                const vBadge = ad.verified
+                    ? `<span class="badge badge-ver">${escapeHtml(msg("verified"))}</span>`
+                    : `<span class="badge badge-unver">${escapeHtml(msg("unverified"))}</span>`;
+                const rBadge = ad.reports > 0
+                    ? `<span class="badge badge-rep">${escapeHtml(msg("reported"))} (${ad.reports})</span>`
+                    : "";
+                const origNote = formatAdOriginalNote(ad);
+
+                const ownerBtns = owner ? `
+                    <button type="button" class="btn-sold-toggle" onclick="toggleSoldStatus(${ad.id})">${escapeHtml(ad.status === "sold" ? msg("markAvailBtn") : msg("markSoldBtn"))}</button>
+                    <button type="button" class="btn-edit" onclick="openEditModal(${ad.id})">✏️</button>
+                    <button type="button" class="btn-delete" onclick="deleteAd(${ad.id})">🗑️</button>
+                ` : "";
+
+                return `
+                    <div class="product-card">
+                        <button type="button" class="wishlist-btn" onclick="toggleWishItem(${ad.id})">${wished ? "❤️" : "🤍"}</button>
+                        <div class="product-img">${renderCardMedia(ad)}</div>
+                        <div class="product-details">
+                            <div class="badge-row">
+                                ${renderStatusBadge(ad.status)}
+                                <span class="badge badge-cat">${escapeHtml(getCatLabel(ad.category))}</span>
+                                <span class="badge badge-cond">${escapeHtml(getCondLabel(ad.condition))}</span>
+                                ${vBadge}
+                                ${rBadge}
+                            </div>
+                            <div class="product-title">${escapeHtml(ad.title)}</div>
+                            <div class="product-price">${escapeHtml(formatAdDisplayPrice(ad))}</div>
+                            ${origNote ? `<div class="sub-price">${escapeHtml(origNote)}</div>` : ""}
+                            <div class="product-location">📍 ${escapeHtml(ad.location)}</div>
+                            <div class="seller-link" onclick="openSellerModal('${escapeHtml(ad.ownerId)}')">👤 ${escapeHtml(ad.sellerName)}</div>
+                            <div class="card-actions">
+                                <button type="button" class="btn-primary" onclick="openDetailsModal(${ad.id})">${escapeHtml(msg("detailsBtn"))}</button>
+                                ${ownerBtns}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function stepPhoto(delta) {
+            const ad = ads.find(a => a.id === activeDetailsId);
+            if (!ad || ad.images.length <= 1) return;
+            isZoomed = false;
+            activePhotoIdx = (activePhotoIdx + delta + ad.images.length) % ad.images.length;
+            renderDetailsModal();
+        }
+
+        function pickPhoto(idx) {
+            isZoomed = false;
+            activePhotoIdx = idx;
+            renderDetailsModal();
+        }
+
+        function toggleZoom() {
+            isZoomed = !isZoomed;
+            renderDetailsModal();
+        }
+
+        function shareAd(id) {
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+            const url = window.location.href.startsWith("http")
+                ? `${window.location.href.split("?")[0]}?ad=${encodeURIComponent(id)}`
+                : `https://buymo.example/ad/${encodeURIComponent(id)}`;
+            if (navigator.share) {
+                navigator.share({ title: `${ad.title} - BuyMo`, url }).catch(() => {});
+                return;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => alert(`${msg("shareCopied")}\n${url}`)).catch(() => prompt(msg("shareCopied"), url));
+            } else {
+                prompt(msg("shareCopied"), url);
+            }
+        }
+
+        function reportAd(id) {
+            const ad = ads.find(a => a.id === id);
+            if (!ad || !confirm(msg("reportConfirm"))) return;
+            ad.reports = Number(ad.reports || 0) + 1;
+            saveAll();
+            alert(msg("reportDone"));
+            renderCurrentAds();
+            renderDetailsModal();
+        }
+
+        function sendOffer(e, id) {
+            e.preventDefault();
+            const input = document.getElementById("offerPriceInput");
+            const amt = Number(input.value);
+            if (!Number.isFinite(amt) || amt <= 0) return;
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+
+            const offerNote = `${msg("offerSentMsg")} ${formatMoney(amt, displayCurr)}`;
+            ad.messages.push({ sender: "buyer", text: offerNote });
+            if (ad.messages.filter(m => m.sender === "seller").length === 0) {
+                ad.messages.push({ sender: "seller", text: msg("autoReply") });
+            }
+            input.value = "";
+            saveAll();
+            renderDetailsModal();
+        }
+
+        function sendChat(e, id) {
+            e.preventDefault();
+            const input = document.getElementById("chatMsgInput");
+            const text = input.value.trim();
+            if (!text) return;
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+            ad.messages.push({ sender: "buyer", text });
+            if (ad.messages.filter(m => m.sender === "seller").length === 0) {
+                ad.messages.push({ sender: "seller", text: msg("autoReply") });
+            }
+            input.value = "";
+            saveAll();
+            renderDetailsModal();
+        }
+
+        // Order & Payment Demo (COD + Card Demo + My Orders History)
+        function openPaymentModal(adId) {
+            const ad = ads.find(a => a.id === adId);
+            if (!ad || ad.status === "sold") return;
+            renderPaymentForm(ad, "");
+            document.getElementById("paymentModal").classList.add("active");
+        }
+
+        function toggleCardFieldsVisibility() {
+            const method = document.getElementById("payMethodSelect").value;
+            const cardBox = document.getElementById("cardFieldsBox");
+            if (cardBox) {
+                cardBox.style.display = method === "card" ? "block" : "none";
+            }
+        }
+
+        function renderPaymentForm(ad, errText) {
+            const defaultName = currentUser ? currentUser.name : "";
+            const defaultPhone = currentUser && currentUser.phone ? currentUser.phone : "";
+            const errHtml = errText
+                ? `<div class="error-box" style="display:block;">${escapeHtml(errText)}</div>`
+                : "";
+            const origNote = formatAdOriginalNote(ad);
+
+            document.getElementById("paymentContent").innerHTML = `
+                <h2 style="color:#2c3e50; margin-bottom:0.35rem;">${escapeHtml(msg("payTitle"))}</h2>
+                <div style="font-size:0.92rem; color:#475569; margin-bottom:0.75rem;">
+                    <strong>${escapeHtml(ad.title)}</strong> • <span style="color:#e67e22; font-weight:800;">${escapeHtml(formatAdDisplayPrice(ad))}</span>
+                    ${origNote ? `<div class="sub-price">${escapeHtml(origNote)}</div>` : ""}
+                </div>
+                <div class="payment-note">ℹ️ ${escapeHtml(msg("payDemoNote"))}</div>
+                ${errHtml}
+                <form onsubmit="submitDemoOrder(event, ${ad.id})">
+                    <div class="form-group">
+                        <label>${escapeHtml(msg("payMethodLbl"))}</label>
+                        <select id="payMethodSelect" onchange="toggleCardFieldsVisibility()">
+                            <option value="cod">${escapeHtml(msg("methodCod"))}</option>
+                            <option value="card">${escapeHtml(msg("methodCard"))}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>${escapeHtml(msg("buyerNameLbl"))}</label>
+                        <input type="text" id="payBuyerName" value="${escapeHtml(defaultName)}" required placeholder="e.g. Kasun Silva">
+                    </div>
+                    <div class="form-group">
+                        <label>${escapeHtml(msg("buyerPhoneLbl"))}</label>
+                        <input type="text" id="payBuyerPhone" value="${escapeHtml(defaultPhone)}" required placeholder="e.g. +94 77 123 4567">
+                    </div>
+                    <div class="form-group">
+                        <label>${escapeHtml(msg("buyerAddrLbl"))}</label>
+                        <input type="text" id="payBuyerAddr" required placeholder="e.g. 12 Lake Road, Colombo">
+                    </div>
+
+                    <div id="cardFieldsBox" style="display:none; background:#f8fafc; padding:0.8rem; border-radius:8px; border:1px solid #cbd5e1; margin-bottom:0.9rem;">
+                        <div class="form-group">
+                            <label>${escapeHtml(msg("cardNumLbl"))}</label>
+                            <input type="text" id="payCardNum" inputmode="numeric" maxlength="23" placeholder="4242 •••• •••• 4242">
+                        </div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;">
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label>${escapeHtml(msg("cardExpLbl"))}</label>
+                                <input type="text" id="payCardExp" maxlength="5" placeholder="12/28">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0;">
+                                <label>${escapeHtml(msg("cardCvcLbl"))}</label>
+                                <input type="password" id="payCardCvc" maxlength="4" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">${escapeHtml(msg("confirmOrderBtn"))}</button>
+                </form>
+            `;
+        }
+
+        function submitDemoOrder(e, adId) {
+            e.preventDefault();
+            const ad = ads.find(a => a.id === adId);
+            if (!ad) return;
+
+            const method = document.getElementById("payMethodSelect").value;
+            const buyerName = document.getElementById("payBuyerName").value.trim();
+            const buyerPhone = document.getElementById("payBuyerPhone").value.trim();
+            const buyerAddr = document.getElementById("payBuyerAddr").value.trim();
+
+            if (buyerName.length < 2) return renderPaymentForm(ad, "Please enter a valid name.");
+            if (buyerPhone.replace(/[^0-9]/g, "").length < 6) return renderPaymentForm(ad, "Please enter a valid phone number.");
+            if (buyerAddr.length < 5) return renderPaymentForm(ad, "Please enter a delivery address.");
+
+            let maskedCard = "";
+            if (method === "card") {
+                const digits = (document.getElementById("payCardNum").value || "").replace(/[^0-9]/g, "");
+                const exp = (document.getElementById("payCardExp").value || "").trim();
+                const cvc = (document.getElementById("payCardCvc").value || "").replace(/[^0-9]/g, "");
+
+                if (digits.length < 12 || digits.length > 19) {
+                    return renderPaymentForm(ad, "Enter a valid demo card number (12–19 digits).");
+                }
+                if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(exp)) {
+                    return renderPaymentForm(ad, "Enter expiry in MM/YY format.");
+                }
+                if (cvc.length < 3 || cvc.length > 4) {
+                    return renderPaymentForm(ad, "Enter a valid 3 or 4 digit CVV/CVC.");
+                }
+                maskedCard = `•••• •••• •••• ${digits.slice(-4)}`;
+            }
+
+            const orderRef = `BM-${Math.floor(100000 + Math.random() * 900000)}`;
+            const methodText = method === "card"
+                ? `${msg("methodCard")} (${maskedCard})`
+                : msg("methodCod");
+
+            const newOrder = {
+                id: orderRef,
+                adId: ad.id,
+                title: ad.title,
+                amountText: formatAdDisplayPrice(ad),
+                methodText,
+                buyerName,
+                buyerPhone,
+                buyerAddr,
+                status: "Pending",
+                date: new Date().toISOString().slice(0, 10)
+            };
+
+            orders.unshift(newOrder);
+            saveAll();
+            syncHeader();
+
+            document.getElementById("paymentContent").innerHTML = `
+                <h2 style="color:#047857; margin-bottom:0.4rem;">✅ ${escapeHtml(msg("orderSuccessTitle"))}</h2>
+                <div class="receipt-box">
+                    <div><strong>Order ID:</strong> ${escapeHtml(newOrder.id)}</div>
+                    <div><strong>Item:</strong> ${escapeHtml(newOrder.title)}</div>
+                    <div><strong>Amount:</strong> ${escapeHtml(newOrder.amountText)}</div>
+                    <div><strong>Method:</strong> ${escapeHtml(newOrder.methodText)}</div>
+                    <div><strong>Status:</strong> ${escapeHtml(newOrder.status)}</div>
+                    <div><strong>Buyer:</strong> ${escapeHtml(newOrder.buyerName)} (${escapeHtml(newOrder.buyerPhone)})</div>
+                    <div><strong>Address:</strong> ${escapeHtml(newOrder.buyerAddr)}</div>
+                </div>
+                <div class="payment-note" style="margin-top:0.8rem;">ℹ️ ${escapeHtml(msg("payDemoNote"))}</div>
+                <button type="button" class="submit-btn" onclick="closeModal('paymentModal')">Done</button>
+            `;
+        }
+
+        function openOrdersModal() {
+            renderOrdersModal();
+            document.getElementById("ordersModal").classList.add("active");
+        }
+
+        function markOrderDelivered(orderId) {
+            const o = orders.find(item => item.id === orderId);
+            if (!o) return;
+            o.status = "Delivered";
+            saveAll();
+            renderOrdersModal();
+        }
+
+        function renderOrdersModal() {
+            const listHtml = orders.length
+                ? orders.map(o => `
+                    <div class="order-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <strong>${escapeHtml(o.id)} • ${escapeHtml(o.date)}</strong>
+                            <span class="badge ${o.status === "Delivered" ? "badge-ver" : "badge-reserved"}">${escapeHtml(o.status)}</span>
+                        </div>
+                        <div style="margin-top:0.35rem; font-weight:700; color:#2c3e50;">${escapeHtml(o.title)} — ${escapeHtml(o.amountText)}</div>
+                        <div style="font-size:0.82rem; color:#475569;">${escapeHtml(o.methodText)}</div>
+                        <div style="font-size:0.82rem; color:#64748b;">📍 ${escapeHtml(o.buyerAddr)}</div>
+                        ${o.status !== "Delivered" ? `<button type="button" class="clear-btn" style="margin-top:0.5rem;" onclick="markOrderDelivered('${escapeHtml(o.id)}')">${escapeHtml(msg("markDeliveredBtn"))}</button>` : ""}
+                    </div>
+                `).join("")
+                : `<p style="color:#64748b; font-size:0.9rem;">${escapeHtml(msg("noOrdersYet"))}</p>`;
+
+            document.getElementById("ordersContent").innerHTML = `
+                <h2 style="color:#2c3e50; margin-bottom:1rem;">📦 ${escapeHtml(msg("ordersModalTitle"))}</h2>
+                ${listHtml}
+            `;
+        }
+
+        function renderDetailsModal() {
+            const ad = ads.find(a => a.id === activeDetailsId);
+            if (!ad) return;
+            const owner = isOwner(ad);
+            const isSold = ad.status === "sold";
+            const origNote = formatAdOriginalNote(ad);
+
+            let galleryHtml = "";
+            if (ad.images.length > 0) {
+                const idx = Math.min(activePhotoIdx, ad.images.length - 1);
+                const zoomText = isZoomed ? msg("zoomOut") : msg("zoomIn");
+                const navHtml = ad.images.length > 1 ? `
+                    <div class="gallery-nav">
+                        <button type="button" class="gallery-btn" onclick="stepPhoto(-1)">${escapeHtml(msg("prevPhoto"))}</button>
+                        <span style="font-size:0.78rem; color:#64748b;">${idx + 1}/${ad.images.length} • ${escapeHtml(zoomText)}</span>
+                        <button type="button" class="gallery-btn" onclick="stepPhoto(1)">${escapeHtml(msg("nextPhoto"))}</button>
+                    </div>
+                    <div class="thumb-row">
+                        ${ad.images.map((src, i) => `<img src="${src}" class="thumb-img ${i === idx ? "active" : ""}" onclick="pickPhoto(${i})" alt="Photo ${i + 1}">`).join("")}
+                    </div>
+                ` : `<div style="font-size:0.78rem; color:#64748b; margin-top:0.35rem;">${escapeHtml(zoomText)}</div>`;
+
+                galleryHtml = `
+                    <div class="gallery-stage">
+                        <div class="gallery-main ${isZoomed ? "zoomed" : ""}" onclick="toggleZoom()">
+                            <img src="${ad.images[idx]}" alt="${escapeHtml(ad.title)}">
+                        </div>
+                        ${navHtml}
+                    </div>
+                `;
+            } else {
+                galleryHtml = `<div style="font-size:3rem; text-align:center; margin-bottom:0.4rem;">${escapeHtml(ad.emoji || "📦")}</div>`;
+            }
+
+            const chatHtml = ad.messages.length
+                ? ad.messages.map(m => `<div class="chat-msg ${m.sender === "buyer" ? "buyer" : "seller"}">${escapeHtml(m.text)}</div>`).join("")
+                : `<div style="font-size:0.8rem; color:#94a3b8; text-align:center;">${escapeHtml(msg("chatPh"))}</div>`;
+
+            const offerBoxHtml = !isSold ? `
+                <div class="offer-box">
+                    <div style="font-size:0.84rem; font-weight:700; color:#9a3412;">${escapeHtml(msg("offerTitle"))} (${escapeHtml(displayCurr)})</div>
+                    <form class="offer-form" onsubmit="sendOffer(event, ${ad.id})">
+                        <input type="number" id="offerPriceInput" min="1" step="any" required placeholder="${escapeHtml(msg("offerPh"))}">
+                        <button type="submit">${escapeHtml(msg("offerSendBtn"))}</button>
+                    </form>
+                </div>
+            ` : "";
+
+            const editDeleteRow = owner ? `
+                <div style="display:flex; gap:0.5rem; margin-top:0.6rem;">
+                    <button type="button" class="btn-edit" style="flex:1;" onclick="closeModal('detailsModal'); openEditModal(${ad.id})">${escapeHtml(msg("editAdBtn"))}</button>
+                    <button type="button" class="btn-delete" style="flex:1;" onclick="deleteAd(${ad.id})">${escapeHtml(msg("deleteAdBtn"))}</button>
+                </div>
+            ` : "";
+
+            document.getElementById("detailsContent").innerHTML = `
+                ${galleryHtml}
+                <div class="badge-row" style="margin-top:0.75rem;">
+                    ${renderStatusBadge(ad.status)}
+                    <span class="badge badge-cat">${escapeHtml(getCatLabel(ad.category))}</span>
+                    <span class="badge badge-cond">${escapeHtml(getCondLabel(ad.condition))}</span>
+                    ${ad.verified ? `<span class="badge badge-ver">${escapeHtml(msg("verified"))}</span>` : ""}
+                </div>
+                <h2 style="color:#2c3e50; margin-top:0.35rem; margin-bottom:0.25rem;">${escapeHtml(ad.title)}</h2>
+                <div style="font-size:1.4rem; font-weight:800; color:#e67e22; margin-bottom:0.2rem;">${escapeHtml(formatAdDisplayPrice(ad))}</div>
+                ${origNote ? `<div class="sub-price" style="margin-bottom:0.45rem;">${escapeHtml(origNote)}</div>` : ""}
+                <p style="font-size:0.88rem; color:#64748b; margin-bottom:0.35rem;">📍 ${escapeHtml(ad.location)}</p>
+                <div class="seller-link" style="margin-bottom:0.75rem;" onclick="closeModal('detailsModal'); openSellerModal('${escapeHtml(ad.ownerId)}')">👤 ${escapeHtml(ad.sellerName)}</div>
+                <p style="background:#f8fafc; padding:0.75rem; border-radius:6px; line-height:1.5; margin-bottom:0.85rem;">${escapeHtml(ad.desc)}</p>
+                <div style="background:#ecfdf5; border:1px solid #10b981; padding:0.7rem; border-radius:6px; text-align:center; font-weight:700; color:#047857;">
+                    📞 ${escapeHtml(ad.phone)}
+                </div>
+
+                <button type="button" class="btn-buy-now" ${isSold ? "disabled" : `onclick="closeModal('detailsModal'); openPaymentModal(${ad.id})"`}>
+                    ${escapeHtml(isSold ? msg("soldUnavailableBtn") : msg("buyNowBtn"))}
+                </button>
+
+                ${offerBoxHtml}
+
+                <div class="chat-box">
+                    <div style="font-size:0.86rem; font-weight:700; color:#2c3e50; margin-bottom:0.45rem;">💬 ${escapeHtml(msg("chatTitle"))}</div>
+                    <div class="chat-list">${chatHtml}</div>
+                    <form class="chat-form" onsubmit="sendChat(event, ${ad.id})">
+                        <input type="text" id="chatMsgInput" placeholder="${escapeHtml(msg("chatPh"))}" required>
+                        <button type="submit">${escapeHtml(msg("sendBtn"))}</button>
+                    </form>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-share" onclick="shareAd(${ad.id})">${escapeHtml(msg("shareBtn"))}</button>
+                    <button type="button" class="btn-report" onclick="reportAd(${ad.id})">${escapeHtml(msg("reportBtn"))}</button>
+                </div>
+                ${editDeleteRow}
+            `;
+        }
+
+        function openDetailsModal(id) {
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+            recordRecentlyViewed(id);
+            activeDetailsId = id;
+            activePhotoIdx = 0;
+            isZoomed = false;
+            renderDetailsModal();
+            document.getElementById("detailsModal").classList.add("active");
+        }
+
+        function compressImage(file, maxWidth = 760, quality = 0.7) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const scale = Math.min(1, maxWidth / img.width);
+                        const canvas = document.createElement("canvas");
+                        canvas.width = Math.round(img.width * scale);
+                        canvas.height = Math.round(img.height * scale);
+                        canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL("image/jpeg", quality));
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handlePhotoUpload(e) {
+            const files = Array.from(e.target.files || []).slice(0, 6);
+            const grid = document.getElementById("photoPreviewGrid");
+            grid.innerHTML = "";
+            uploadedPhotos = [];
+            for (const f of files) {
+                try {
+                    const dataUrl = await compressImage(f);
+                    uploadedPhotos.push(dataUrl);
+                    const img = document.createElement("img");
+                    img.src = dataUrl;
+                    img.className = "preview-thumb";
+                    img.alt = "Preview";
+                    grid.appendChild(img);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+        }
+
+        function showAdError(text) {
+            const box = document.getElementById("adErrorBox");
+            box.innerText = text;
+            box.style.display = "block";
+        }
+
+        function openPostModal() {
+            if (!currentUser) {
+                alert(msg("loginFirst"));
+                openAuthModal();
+                return;
+            }
+            editingAdId = null;
+            uploadedPhotos = [];
+            document.getElementById("photoPreviewGrid").innerHTML = "";
+            document.getElementById("postModalTitle").innerText = msg("postTitle");
+            document.getElementById("submitAdBtn").innerText = msg("publishBtn");
+            document.querySelector("#postModal form").reset();
+            document.getElementById("adCondition").value = "used";
+            document.getElementById("adStatus").value = "available";
+            document.getElementById("adCurrency").value = displayCurr;
+            document.getElementById("adErrorBox").style.display = "none";
+            document.getElementById("postModal").classList.add("active");
+        }
+
+        function openEditModal(id) {
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+            if (!currentUser) {
+                alert(msg("loginFirst"));
+                openAuthModal();
+                return;
+            }
+            if (!isOwner(ad)) {
+                alert(msg("ownerOnly"));
+                return;
+            }
+            editingAdId = ad.id;
+            uploadedPhotos = [...ad.images];
+            document.getElementById("postModalTitle").innerText = msg("editTitle");
+            document.getElementById("submitAdBtn").innerText = msg("saveChangesBtn");
+            document.getElementById("adErrorBox").style.display = "none";
+            document.getElementById("adTitle").value = ad.title;
+            document.getElementById("adCategory").value = ad.category;
+            document.getElementById("adCondition").value = ad.condition || "used";
+            document.getElementById("adStatus").value = ad.status || "available";
+            document.getElementById("adCurrency").value = normalizeCurrencyCode(ad.currency);
+            document.getElementById("adPrice").value = ad.price;
+            document.getElementById("adRegion").value = ad.region;
+            document.getElementById("adLocation").value = ad.location;
+            document.getElementById("adPhone").value = ad.phone;
+            document.getElementById("adDesc").value = ad.desc;
+            document.getElementById("adPhotoInput").value = "";
+            document.getElementById("photoPreviewGrid").innerHTML = uploadedPhotos
+                .map(src => `<img src="${src}" class="preview-thumb" alt="Preview">`).join("");
+            document.getElementById("postModal").classList.add("active");
+        }
+
+        function submitAd(event) {
+            event.preventDefault();
+            if (!currentUser) return showAdError(msg("loginFirst"));
+
+            const title = document.getElementById("adTitle").value.trim();
+            const category = document.getElementById("adCategory").value;
+            const condition = document.getElementById("adCondition").value;
+            const status = document.getElementById("adStatus").value;
+            const currency = normalizeCurrencyCode(document.getElementById("adCurrency").value);
+            const price = Number(document.getElementById("adPrice").value);
+            const region = document.getElementById("adRegion").value;
+            const location = document.getElementById("adLocation").value.trim();
+            const phone = document.getElementById("adPhone").value.trim();
+            const desc = document.getElementById("adDesc").value.trim();
+
+            if (title.length < 3) return showAdError("Title must be at least 3 characters.");
+            if (!Number.isFinite(price) || price <= 0) return showAdError("Price must be greater than 0.");
+            if (location.length < 2) return showAdError("Location is required.");
+            if (phone.replace(/[^0-9]/g, "").length < 6) return showAdError("Enter a valid phone number.");
+            if (desc.length < 8) return showAdError("Description must be at least 8 characters.");
+
+            const emojiMap = { Electronics: "📱", Vehicles: "🚗", Fashion: "🧥", Property: "🏠", Home: "🛠️", Sports: "⚽" };
+
+            if (editingAdId !== null) {
+                const idx = ads.findIndex(a => a.id === editingAdId);
+                if (idx === -1 || !isOwner(ads[idx])) return showAdError(msg("ownerOnly"));
+                ads[idx] = {
+                    ...ads[idx],
+                    title, category, condition, status, currency, price, region, location, phone, desc,
+                    emoji: emojiMap[category] || "📦",
+                    images: uploadedPhotos.length > 0 ? [...uploadedPhotos] : ads[idx].images,
+                    verified: Boolean(currentUser.verified)
+                };
+                editingAdId = null;
+            } else {
+                ads.unshift({
+                    id: Date.now(),
+                    ownerId: currentUser.id,
+                    sellerName: currentUser.name,
+                    title, category, condition, status, currency, price, region, location, phone, desc,
+                    emoji: emojiMap[category] || "📦",
+                    images: [...uploadedPhotos],
+                    verified: Boolean(currentUser.verified),
+                    reports: 0,
+                    messages: []
+                });
+            }
+
+            uploadedPhotos = [];
+            saveAll();
+            closeModal("postModal");
+            renderCurrentAds();
+        }
+
+        function deleteAd(id) {
+            const ad = ads.find(a => a.id === id);
+            if (!ad) return;
+            if (!currentUser) {
+                alert(msg("loginFirst"));
+                openAuthModal();
+                return;
+            }
+            if (!isOwner(ad)) {
+                alert(msg("ownerOnly"));
+                return;
+            }
+            if (!confirm(msg("deleteConfirm"))) return;
+            ads = ads.filter(a => a.id !== id);
+            wishlist = wishlist.filter(x => x !== id);
+            recentlyViewed = recentlyViewed.filter(x => x !== id);
+            saveAll();
+            closeModal("detailsModal");
+            renderCurrentAds();
+        }
+
+        function openAuthModal() {
+            if (currentUser) {
+                currentUser = null;
+                pendingCode = "";
+                authNotice = "";
+                if (viewMode === "myads") viewMode = "all";
+                saveAll();
+                renderCurrentAds();
+                return;
+            }
+            authNotice = "";
+            renderAuthModal();
+            document.getElementById("authModal").classList.add("active");
+        }
+
+        function handleDemoLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById("demoName").value.trim();
+            const email = document.getElementById("demoEmail").value.trim().toLowerCase();
+            if (name.length < 2 || !email.includes("@")) return;
+            const slug = email.replace(/[^a-z0-9]/g, "_").slice(0, 20);
+            currentUser = { id: `user_${slug}`, name, email, verified: false };
+            authNotice = "Logged into Demo Account. You can now verify your seller status.";
+            authIsErr = false;
+            saveAll();
+            renderAuthModal();
+            renderCurrentAds();
+        }
+
+        function sendDemoCode() {
+            pendingCode = String(Math.floor(100000 + Math.random() * 900000));
+            authNotice = `Demo Code: ${pendingCode}`;
+            authIsErr = false;
+            renderAuthModal();
+        }
+
+        function verifyDemoCode(e) {
+            e.preventDefault();
+            const codeVal = document.getElementById("codeInput").value.trim();
+            if (!pendingCode || codeVal !== pendingCode) {
+                authNotice = "Invalid verification code.";
+                authIsErr = true;
+                renderAuthModal();
+                return;
+            }
+            if (currentUser) {
+                currentUser.verified = true;
+                ads = ads.map(a => a.ownerId === currentUser.id ? { ...a, verified: true } : a);
+            }
+            pendingCode = "";
+            authNotice = "Verified Seller status activated!";
+            authIsErr = false;
+            saveAll();
+            renderAuthModal();
+            renderCurrentAds();
+        }
+
+        function renderAuthModal() {
+            const noticeHtml = authNotice
+                ? `<div style="padding:0.65rem; border-radius:6px; margin-bottom:0.8rem; font-size:0.86rem; background:${authIsErr ? "#fee2e2" : "#dcfce7"}; color:${authIsErr ? "#b91c1c" : "#15803d"};">${escapeHtml(authNotice)}</div>`
+                : "";
+
+            const verifyBlock = currentUser && !currentUser.verified ? `
+                <hr style="margin:1.1rem 0; border:none; border-top:1px solid #e2e8f0;">
+                <h3 style="margin-bottom:0.4rem; color:#2c3e50;">Verify Seller Account</h3>
+                <button type="button" class="auth-btn" onclick="sendDemoCode()">Generate 6-Digit Code</button>
+                ${pendingCode ? `<div class="code-box">${escapeHtml(pendingCode)}</div>` : ""}
+                <form onsubmit="verifyDemoCode(event)" style="margin-top:0.6rem;">
+                    <div class="form-group">
+                        <label>Enter 6-Digit Code</label>
+                        <input type="text" id="codeInput" maxlength="6" required placeholder="123456">
+                    </div>
+                    <button type="submit" class="submit-btn">Verify Account</button>
+                </form>
+            ` : "";
+
+            document.getElementById("authContent").innerHTML = `
+                <h2 style="margin-bottom:0.9rem; color:#2c3e50;">Demo Account Login</h2>
+                ${noticeHtml}
+                <form onsubmit="handleDemoLogin(event)">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="demoName" value="${currentUser ? escapeHtml(currentUser.name) : ""}" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="demoEmail" value="${currentUser ? escapeHtml(currentUser.email) : ""}" required placeholder="you@example.com">
+                    </div>
+                    <button type="submit" class="submit-btn">Save Demo Login</button>
+                </form>
+                ${verifyBlock}
+            `;
+        }
+
+        function openSellerModal(sellerId) {
+            const sellerAds = ads.filter(a => a.ownerId === sellerId);
+            const first = sellerAds[0] || { sellerName: "Seller", verified: false };
+            const revs = sellerReviews[sellerId] || [];
+            const avg = revs.length
+                ? (revs.reduce((acc, r) => acc + Number(r.rating), 0) / revs.length).toFixed(1)
+                : "No ratings";
+
+            const revsHtml = revs.length
+                ? revs.map(r => `
+                    <div class="review-item">
+                        <strong>${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)} • ${escapeHtml(r.author)}</strong>
+                        <div style="color:#475569; margin-top:0.2rem;">${escapeHtml(r.comment)}</div>
+                    </div>
+                `).join("")
+                : `<p style="font-size:0.85rem; color:#64748b; margin-bottom:0.6rem;">No reviews yet.</p>`;
+
+            document.getElementById("sellerContent").innerHTML = `
+                <h2 style="color:#2c3e50; margin-bottom:0.3rem;">👤 ${escapeHtml(first.sellerName)}</h2>
+                <p style="font-size:0.9rem; font-weight:700; color:#e67e22; margin-bottom:0.8rem;">⭐ ${escapeHtml(avg)}</p>
+                <h4 style="margin-bottom:0.4rem; color:#2c3e50;">Reviews</h4>
+                <div style="margin-bottom:1rem;">${revsHtml}</div>
+                <form onsubmit="addReview(event, '${escapeHtml(sellerId)}')">
+                    <div class="form-group">
+                        <label>Star Rating</label>
+                        <select id="revStars">
+                            <option value="5">★★★★★ (5)</option>
+                            <option value="4">★★★★☆ (4)</option>
+                            <option value="3">★★★☆☆ (3)</option>
+                            <option value="2">★★☆☆☆ (2)</option>
+                            <option value="1">★☆☆☆☆ (1)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Review Comment</label>
+                        <textarea id="revText" rows="2" required placeholder="Write a short review..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Rating</button>
+                </form>
+            `;
+            document.getElementById("sellerModal").classList.add("active");
+        }
+
+        function addReview(e, sellerId) {
+            e.preventDefault();
+            if (!currentUser) {
+                alert(msg("loginFirst"));
+                openAuthModal();
+                return;
+            }
+            const rating = Number(document.getElementById("revStars").value);
+            const comment = document.getElementById("revText").value.trim();
+            if (!comment || rating < 1 || rating > 5) return;
+            if (!sellerReviews[sellerId]) sellerReviews[sellerId] = [];
+            sellerReviews[sellerId].unshift({ rating, author: currentUser.name, comment });
+            saveAll();
+            openSellerModal(sellerId);
+        }
+
+        function closeModal(id) {
+            if (id === "detailsModal") {
+                activeDetailsId = null;
+                isZoomed = false;
+            }
+            document.getElementById(id).classList.remove("active");
+        }
+
+        function resetDemoData() {
+            ads = initialAds.map(normalizeAd);
+            wishlist = [];
+            orders = [];
+            recentlyViewed = [];
+            sellerReviews = { ...initialReviews };
+            saveAll();
+            resetFilters();
+        }
+
+        applyStaticTranslations();
+        renderCurrentAds();
+    </script>
+</body>
+</html>
